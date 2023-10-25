@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Courses</h2>
+<ul>
+    {% for course in courses %}
+    <li>
+        {{ course.name }} by {{ course.manager }}
+        <a href="/update_course/{{ course.id }}">Update</a>
+        <a href="/delete_course/{{ course.id }}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="/add_course">Add New Course</a>
+{% endblock %}

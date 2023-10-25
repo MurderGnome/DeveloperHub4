@@ -1,0 +1,11 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Edit Plan of Instruction</h2>
+  <form method="post">
+    {% csrf_token %}
+    <textarea name="content" rows="10" cols="50">{{ plan_of_instruction.content }}</textarea>
+    <button type="submit">Save Changes</button>
+  </form>
+{% endblock %}

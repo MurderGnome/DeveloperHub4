@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Learning Outcomes</h2>
+  
+  <ul>
+    {% for outcome in object_list %}
+      <li>
+        <strong>{{ outcome.title }}</strong>: {{ outcome.description }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

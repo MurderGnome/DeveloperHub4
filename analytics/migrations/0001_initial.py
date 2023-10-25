@@ -1,0 +1,1 @@
+# Placeholder migration file. Run 'python manage.py makemigrations' to generate actual migrations.

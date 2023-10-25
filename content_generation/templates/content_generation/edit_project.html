@@ -1,0 +1,39 @@
+
+<!-- This script should be integrated into the template where users edit their projects -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Detect changes in form fields
+        let isChanged = false;
+        $("form :input").change(function() {
+            isChanged = true;
+        });
+        
+        // Set up periodic auto-save (e.g., every 5 minutes)
+        setInterval(function() {
+            if (isChanged) {
+                $.ajax({
+                    url: `/autosave/{{ project.id }}/`,  // Adjust the URL based on your project setup
+                    method: "POST",
+                    data: $("form").serialize(),  // Serialize form data
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        if (response.status === "success") {
+                            console.log("Project saved successfully.");
+                        } else {
+                            console.error("Error saving project:", response.message);
+                        }
+                    },
+                    error: function() {
+                        console.error("Failed to save project.");
+                    }
+                });
+                
+                isChanged = false;
+            }
+        }, 300000);  // 300000 milliseconds = 5 minutes
+    });
+</script>

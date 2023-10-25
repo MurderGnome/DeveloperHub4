@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    h2 {
+        color: #333;
+        font-weight: bold;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    input[type="text"] {
+        padding: 5px;
+        margin: 10px 0;
+        width: 300px;
+    }
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+    
+<h2>Create a New Course</h2>
+<form method="post">
+    {% csrf_token %}
+    Course Name: <input type="text" name="course_name"><br>
+    Course Development Manager Name: <input type="text" name="course_development_manager_name"><br>
+    
+<div id="modules-container"></div>
+<button onclick="addModule()">Add Module</button>
+
+<script>
+    let moduleCount = 0;
+    let stsLineItemCount = 0;
+    let learningOutcomeCount = 0;
+
+    function addModule() {
+        moduleCount++;
+        const moduleContainer = document.getElementById('modules-container');
+        const moduleDiv = document.createElement('div');
+        moduleDiv.innerHTML = `
+            <hr>
+            <h3>Module ${moduleCount}</h3>
+            Module Name: <input type="text" name="module_name_${moduleCount}">
+            <div id="sts-items-container-${moduleCount}"></div>
+            <button onclick="addSTSLineItem(${moduleCount})">Add STS Line Item</button>
+        `;
+        moduleContainer.appendChild(moduleDiv);
+    }
+
+    function addSTSLineItem(moduleNum) {
+        stsLineItemCount++;
+        const stsItemsContainer = document.getElementById('sts-items-container-' + moduleNum);
+        const stsItemDiv = document.createElement('div');
+        stsItemDiv.innerHTML = `
+            <h4>STS Line Item ${stsLineItemCount}</h4>
+            STS Item Name: <input type="text" name="sts_item_name_${moduleNum}_${stsLineItemCount}">
+            <div id="learning-outcomes-container-${moduleNum}-${stsLineItemCount}"></div>
+            <button onclick="addLearningOutcome(${moduleNum}, ${stsLineItemCount})">Add Learning Outcome</button>
+        `;
+        stsItemsContainer.appendChild(stsItemDiv);
+    }
+
+    function addLearningOutcome(moduleNum, stsItemNum) {
+        learningOutcomeCount++;
+        const learningOutcomesContainer = document.getElementById('learning-outcomes-container-' + moduleNum + '-' + stsItemNum);
+        const learningOutcomeDiv = document.createElement('div');
+        learningOutcomeDiv.innerHTML = `
+            Learning Outcome ${learningOutcomeCount}: <input type="text" name="learning_outcome_${moduleNum}_${stsItemNum}_${learningOutcomeCount}">
+        `;
+        learningOutcomesContainer.appendChild(learningOutcomeDiv);
+    }
+</script>
+    
+    <!-- This can be enhanced further based on specific requirements and JavaScript functionality for dynamic additions -->
+    <input type="submit" value="Create Course">
+</form>
+{% endblock %}

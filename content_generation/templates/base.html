@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Generation Platform</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+</head>
+<body>
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+
+<!-- Firebase initialization -->
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "ApI_Key",
+        authDomain: "developer-hub-dd6f1.firebaseapp.com",
+        projectId: "developer-hub-dd6f1",
+        storageBucket: "developer-hub-dd6f1.appspot.com",
+        messagingSenderId: "852235384470",
+        appId: "1:852235384470:web:54c537d81e743ff57634b7",
+        measurementId: "G-ZD4E707ZMD"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+
+</body>
+</html>

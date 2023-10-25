@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>GPT-2 Content Generation</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="prompt">Enter a prompt:</label>
+            <textarea class="form-control" id="prompt" name="prompt" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Content</button>
+    </form>
+</div>
+{% endblock %}

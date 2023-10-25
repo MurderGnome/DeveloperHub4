@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Generated Content</h2>
+    <div class="alert alert-info" role="alert">
+        {{ generated_content }}
+    </div>
+    <a href="{% url 'gpt2_input_view' %}" class="btn btn-secondary">Generate Again</a>
+</div>
+{% endblock %}
