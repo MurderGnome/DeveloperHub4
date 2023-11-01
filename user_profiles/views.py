@@ -2,22 +2,26 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.contrib import messages
 
 def signup_view(request):
     # Handle user sign up logic here
     pass
 
+
 def login_view(request):
-    # Handle user login logic here
-    pass
+    return render(request, 'login.html')
 
 @login_required
 def profile_view(request):
     user_profile = request.user
     if request.method == "POST":
         # Assuming a ProfileForm is defined to handle profile updates
-        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        form = ProfileForm(request.POST, request.FILES, 
+                           
+  instance=user_profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile updated successfully!")
