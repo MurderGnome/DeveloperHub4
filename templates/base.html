@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Hub</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Firebase SDK scripts -->
+    <script defer src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script defer>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding-top: 20px;
+        }
+        header, footer {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
+
+    {% block additional_head %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Common Header or Navbar -->
+    <header>
+      Developer Hub
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}
+        <!-- This space will be filled by child templates -->
+        {% endblock %}
+    </main>
+
+    <!-- Common Footer -->
+    <footer>
+        Copyright © 2023 Developer Hub. All rights reserved.
+    </footer>
+
+    {% block additional_scripts %}{% endblock %}
+
+    <!-- Optional: Include Bootstrap's JavaScript library if you plan to use its interactive components. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

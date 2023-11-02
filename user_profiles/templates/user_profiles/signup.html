@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <!-- You can add other metadata, stylesheets, or scripts here -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+
+    <!-- Add the Firebase Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
+
+</head>
+<body>
+    <!-- Email and Password Input Fields -->
+    <input type="email" id="email" placeholder="Enter email">
+    <input type="password" id="password" placeholder="Enter password">
+
+    <!-- Sign Up Button -->
+    <button id="signupButton">Sign Up</button>
+    
+    <!-- Display for messages -->
+    <div id="message"></div>
+
+    <!-- Firebase Initialization and Signup Logic -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            // ... other config values
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        function signUpWithEmailPassword() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Sign up successful
+                    const user = userCredential.user;
+                    console.log("User signed up:", user);
+                    document.getElementById('message').innerText = "Signup successful! Redirecting...";
+                    // Optionally, redirect the user to another page or use Django's flash messages for feedback
+                    window.location.href = "{% url 'profile' %}";
+                })
+                .catch((error) => {
+                    // Handle errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log("Error signing up:", errorCode, errorMessage);
+                    document.getElementById('message').innerText = "Error: " + errorMessage;
+                });
+        }
+
+        document.getElementById('signupButton').addEventListener('click', signUpWithEmailPassword);
+    </script>
+</body>
+</html>

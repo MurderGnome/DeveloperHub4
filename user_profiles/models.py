@@ -1,24 +1,20 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group, Permission, User
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
-class UserProfile(AbstractUser):
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
-    history = models.JSONField(default=dict)
-
-    # Define custom related names for groups and user_permissions to avoid reverse accessor clashes
+class UserProfile(models.Model):
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(unique=True)
     groups = models.ManyToManyField(
-        'auth.Group',
+        Group,
+        verbose_name=_('groups'),
         blank=True,
-        related_name="custom_user_groups",
-        verbose_name=_('groups')
+        related_name="userprofile_groups",
     )
     user_permissions = models.ManyToManyField(
-        'auth.Permission',
+        Permission,
+        verbose_name=_('user permissions'),
         blank=True,
-        related_name="custom_user_permissions",
-        verbose_name=_('user permissions')
+        related_name="userprofile_user_permissions",
     )
-
-    def __str__(self):
-        return self.username

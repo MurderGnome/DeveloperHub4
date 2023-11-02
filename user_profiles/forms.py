@@ -1,11 +1,10 @@
-
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
 
-class ProfileForm(forms.ModelForm):
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
     class Meta:
         model = UserProfile
-        fields = ['profile_picture', 'history']
-        widgets = {
-            'history': forms.Textarea(attrs={'rows': 5, 'cols': 50}),
-        }
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
