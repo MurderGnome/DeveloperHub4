@@ -58,7 +58,10 @@ class Assessment(models.Model):
         return self.title
 
 class PlanOfInstruction(models.Model):
-    pass
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -72,8 +75,11 @@ class Rubric(models.Model):
     def __str__(self):
         return self.title
 
-class StudentActivity:
-    def __init__(self, name, description):
-        self.name = name
-        self.description = descriptionadmin.site.register(StudentActivity, StudentActivity) 
+class StudentActivity(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
