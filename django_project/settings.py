@@ -35,6 +35,11 @@ X_FRAME_OPTIONS = '*'
 # Application definition
 
 INSTALLED_APPS = [
+    'analytics',
+    'content_generation',
+    'export_share',
+    'machine_learning',
+    'projects',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user_profiles',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
