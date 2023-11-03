@@ -2,58 +2,68 @@
 <html>
 <head>
     <title>Sign Up</title>
-    <!-- You can add other metadata, stylesheets, or scripts here -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
 
     <!-- Add the Firebase Auth SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
-
 </head>
-<body>
-    <!-- Email and Password Input Fields -->
-    <input type="email" id="email" placeholder="Enter email">
-    <input type="password" id="password" placeholder="Enter password">
+<body class="bg-light">
 
-    <!-- Sign Up Button -->
-    <button id="signupButton">Sign Up</button>
-    
-    <!-- Display for messages -->
-    <div id="message"></div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                    </div>
+                    <button id="signupButton" class="btn btn-primary btn-block">Sign Up</button>
+                </div>
+            </div>
+            <div id="message" class="text-center mt-3"></div>
+        </div>
+    </div>
+</div>
 
-    <!-- Firebase Initialization and Signup Logic -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            // ... other config values
-        };
-        firebase.initializeApp(firebaseConfig);
+<!-- Firebase Initialization and Signup Logic -->
+<script>
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        // ... other config values
+    };
+    firebase.initializeApp(firebaseConfig);
 
-        function signUpWithEmailPassword() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+    function signUpWithEmailPassword() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Sign up successful
-                    const user = userCredential.user;
-                    console.log("User signed up:", user);
-                    document.getElementById('message').innerText = "Signup successful! Redirecting...";
-                    // Optionally, redirect the user to another page or use Django's flash messages for feedback
-                    window.location.href = "{% url 'profile' %}";
-                })
-                .catch((error) => {
-                    // Handle errors here.
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log("Error signing up:", errorCode, errorMessage);
-                    document.getElementById('message').innerText = "Error: " + errorMessage;
-                });
-        }
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                document.getElementById('message').innerText = "Signup successful! Redirecting...";
+                window.location.href = "{% url 'profile' %}";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                document.getElementById('message').innerText = "Error: " + errorMessage;
+            });
+    }
 
-        document.getElementById('signupButton').addEventListener('click', signUpWithEmailPassword);
-    </script>
+    document.getElementById('signupButton').addEventListener('click', signUpWithEmailPassword);
+</script>
 </body>
 </html>

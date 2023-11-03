@@ -110,6 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'user_profiles.firebase_auth_backend.FirebaseAuthenticationBackend',  # Path to the custom Firebase backend
+    'django.contrib.auth.backends.ModelBackend',  # Default Django backend
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
