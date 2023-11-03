@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import firebase_admin
+from firebase_admin import credentials
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +35,15 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 X_FRAME_OPTIONS = '*'
 
+# Get the service account key from Replit secrets
+firebase_service_account_key = os.getenv('FIREBASE_SERVICE_ACCOUNT')
+if firebase_service_account_key:
+    cred_dict = json.loads(firebase_service_account_key)
+    cred = credentials.Certificate(cred_dict)
+    firebase_admin.initialize_app(cred)
+else:
+    raise ValueError('The Firebase service account key has not been set in the environment variables.')
+  
 # Application definition
 
 INSTALLED_APPS = [
