@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Firebase SDK scripts -->
-    <script defer src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
-
-    <!-- Firebase Configuration -->
-    <script src="{% static 'firebaseconfig.js' %}"></script>
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-    </script>
+    <!-- Defer Firebase SDK scripts -->
+    <!-- Removed inline script here. We will import Firebase in the firebaseConfig.js module -->
 
     <style>
         body {
@@ -56,13 +48,16 @@
         Copyright © 2023 Developer Hub. All rights reserved.
     </footer>
 
+    <!-- Firebase Configuration and Initialization -->
+    <!-- Use type="module" to allow the use of import/export in the script -->
+    <script type="module" src="{% static 'firebaseconfig.js' %}"></script>
+
     {% block additional_scripts %}{% endblock %}
 
-    <!-- Optional: Include Bootstrap's JavaScript library if you plan to use its interactive components. -->
+    <!-- Bootstrap's JavaScript library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
