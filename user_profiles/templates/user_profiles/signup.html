@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  
     <title>Sign Up</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
-
-    <!-- Add the Firebase Auth SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
-</head>gstatic
+    <!-- Firebase SDK -->
+    <script src="{% static 'firebaseconfig.js' %}"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+</head>
 <body class="bg-light">
 
 <div class="container mt-5">
@@ -42,28 +38,44 @@
 
 <!-- Firebase Initialization and Signup Logic -->
 <script>
+    // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_AUTH_DOMAIN",
         // ... other config values
     };
+
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    function signUpWithEmailPassword() {
+    async function signUpWithEmailPassword() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                document.getElementById('message').innerText = "Signup successful! Redirecting...";
-                window.location.href = "{% url 'profile' %}";
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                document.getElementById('message').innerText = "Error: " + errorMessage;
+        try {
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const idToken = await userCredential.user.getIdToken();
+
+            // Send ID token to Django backend via POST request
+            const response = await fetch('/path/to/your/django/signup/view', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `idToken=${idToken}`
             });
+
+            if(response.ok) {
+                document.getElementById('message').innerText = "Signup successful!";
+                // Redirect to profile or login page as needed
+            } else {
+                // Handle errors
+                document.getElementById('message').innerText = "Error: " + await response.text();
+            }
+        } catch (error) {
+            console.error(error);
+            document.getElementById('message').innerText = "Error: " + error.message;
+        }
     }
 
     document.getElementById('signupButton').addEventListener('click', signUpWithEmailPassword);

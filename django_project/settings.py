@@ -16,8 +16,15 @@ import firebase_admin
 from firebase_admin import credentials
 import json
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+TEMPLATES = [{
+    'DIRS': [BASE_DIR / 'templates'],
+}]
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
