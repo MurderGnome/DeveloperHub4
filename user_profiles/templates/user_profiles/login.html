@@ -20,15 +20,14 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
+                <div id="loginError" class="text-center text-danger mt-3"></div>
                 <div class="text-center mt-3">
                     <span>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></span>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
     <!-- Feature Highlights Section -->
     <div class="container mt-5">
         <h2 class="text-center">Dive into our features:</h2>
@@ -58,42 +57,37 @@
     <h3 class="mt-4">6. Share & Export Tools:</h3>
     <p>Seamlessly share your content with others and export lessons in various formats.</p>
 </div>
-  {% endblock %}
+{% endblock %}
 
-  {% block additional_scripts %}
-  <script src="{% static 'firebaseconfig.js' %}"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
+{% block additional_scripts %}
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+    import { firebaseConfig } from '/static/firebaseconfig.js';
 
-      };
-      firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-      function signIn() {
-          const email = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
+    function signIn() {
+        const email = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-          firebase.auth().signInWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-              // Signed in
-              var user = userCredential.user;
-              // TODO: You can redirect to the desired page or perform other actions upon successful login
-              window.location.href = "{% url 'profile' %}";
-          })
-          .catch((error) => {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // TODO: display the error message to the user or handle it appropriately
-              alert(errorMessage);
-          });
-      }
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            window.location.href = "{% url 'profile' %}"; // Redirect to profile
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            document.getElementById("loginError").textContent = errorMessage; // Display error message
+        });
+    }
 
-      // Modify the form submission to call the signIn() function
-      document.getElementById("loginForm").addEventListener("submit", function(event) {
-          event.preventDefault();  // Prevent default form submission
-          signIn();
-      });
-  </script>
-  {% endblock %}
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent default form submission
+        signIn();
+    });
+</script>
+{% endblock %}

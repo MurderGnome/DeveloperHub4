@@ -5,11 +5,6 @@
     <title>Sign Up</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <!-- Firebase SDK -->
-    <script src="{% static 'firebaseconfig.js' %}"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body class="bg-light">
 
@@ -38,23 +33,16 @@
 </div>
 
 <!-- Firebase Initialization and Signup Logic -->
-<script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        // ... other config values
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+<script type="module">
+    import { auth } from '/static/firebaseconfig.js'; // Assuming firebaseconfig.js is in the static root
+    import { createUserWithEmailAndPassword } from 'firebase/auth';
 
     async function signUpWithEmailPassword() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         try {
-            const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const idToken = await userCredential.user.getIdToken();
 
             // Send ID token to Django backend via POST request
