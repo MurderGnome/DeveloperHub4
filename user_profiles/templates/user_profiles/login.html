@@ -61,33 +61,42 @@
 
 {% block additional_scripts %}
 <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
-    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
-    import { firebaseConfig } from '/static/firebaseconfig.js';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js';
 
-    // Initialize Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyDbRzICdk7-rbhi67OtnwSfIkVZI6K-crk",
+    authDomain: "developer-hub-dd6f1.firebaseapp.com",
+    projectId: "developer-hub-dd6f1",
+    storageBucket: "developer-hub-dd6f1.appspot.com",
+    messagingSenderId: "852235384470",
+    appId: "1:852235384470:web:3aaab02a7326d6177634b7",
+    measurementId: "G-JTMRRQLLZF"
+  };
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
+  
+// Sign in with email and password
     function signIn() {
-        const email = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            window.location.href = "{% url 'profile' %}"; // Redirect to profile
+        const email = document.getElementById("username").value; // Get the email from the input field
+        const password = document.getElementById("password").value; // Get the password from the input field
+      
+        signInWithEmailAndPassword(auth, email, password) // Replace with your own email and password
+        .then((userCredential) => { // Handle successful sign-in
+      
+            window.location.href = "{% url 'profile' %}"; // Redirect to profile page
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            const errorCode = error.code; // Get the error code
+            const errorMessage = error.message; // e.g., "The email is already taken."
             document.getElementById("loginError").textContent = errorMessage; // Display error message
         });
     }
 
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
+    document.getElementById("loginForm").addEventListener("submit", function(event) {// Prevent form submission
         event.preventDefault();  // Prevent default form submission
-        signIn();
+        signIn();// Call the signIn function
     });
 </script>
+
 {% endblock %}

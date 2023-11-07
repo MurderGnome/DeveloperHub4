@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import UserProfile
 from django.contrib import messages
 from .forms import UserRegisterForm
+from .forms import ProfileForm
 
 
 def signup_view(request):

@@ -9,9 +9,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Defer Firebase SDK scripts -->
-    <!-- Removed inline script here. We will import Firebase in the firebaseConfig.js module -->
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,14 +23,17 @@
         }
     </style>
 
-    {% block additional_head %}{% endblock %}
+    {% block additional_head %}
+  
+  {% endblock %}
+  
 </head>
 
 <body>
 
     <!-- Common Header or Navbar -->
     <header>
-      Developer Hub
+        Developer Hub
     </header>
 
     <!-- Main Content -->
@@ -48,11 +48,10 @@
         Copyright © 2023 Developer Hub. All rights reserved.
     </footer>
 
-    <!-- Firebase Configuration and Initialization -->
-    <!-- Use type="module" to allow the use of import/export in the script -->
-    <script type="module" src="{% static 'firebaseconfig.js' %}"></script>
-
-    {% block additional_scripts %}{% endblock %}
+    {% block additional_scripts %}
+  
+  
+  {% endblock %}
 
     <!-- Bootstrap's JavaScript library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

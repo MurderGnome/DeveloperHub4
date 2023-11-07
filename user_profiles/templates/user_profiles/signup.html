@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-{% load static %}
 <head>
     <title>Sign Up</title>
     <!-- Bootstrap CSS -->
@@ -34,8 +33,23 @@
 
 <!-- Firebase Initialization and Signup Logic -->
 <script type="module">
-    import { auth } from '/static/firebaseconfig.js'; // Assuming firebaseconfig.js is in the static root
-    import { createUserWithEmailAndPassword } from 'firebase/auth';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDbRzICdk7-rbhi67OtnwSfIkVZI6K-crk",
+      authDomain: "developer-hub-dd6f1.firebaseapp.com",
+      projectId: "developer-hub-dd6f1",
+      storageBucket: "developer-hub-dd6f1.appspot.com",
+      messagingSenderId: "852235384470",
+      appId: "1:852235384470:web:54c537d81e743ff57634b7",
+      measurementId: "G-ZD4E707ZMD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
     async function signUpWithEmailPassword() {
         const email = document.getElementById('email').value;
@@ -43,24 +57,10 @@
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const idToken = await userCredential.user.getIdToken();
+            // You might want to get an ID token to send to your backend here
 
-            // Send ID token to Django backend via POST request
-            const response = await fetch('/path/to/your/django/signup/view', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `idToken=${idToken}`
-            });
-
-            if(response.ok) {
-                document.getElementById('message').innerText = "Signup successful!";
-                // Redirect to profile or login page as needed
-            } else {
-                // Handle errors
-                document.getElementById('message').innerText = "Error: " + await response.text();
-            }
+            document.getElementById('message').innerText = "Signup successful!";
+            // Handle redirection or further user interactions here
         } catch (error) {
             console.error(error);
             document.getElementById('message').innerText = "Error: " + error.message;
@@ -69,5 +69,6 @@
 
     document.getElementById('signupButton').addEventListener('click', signUpWithEmailPassword);
 </script>
+
 </body>
 </html>
